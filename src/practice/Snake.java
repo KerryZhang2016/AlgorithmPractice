@@ -3,11 +3,17 @@ package practice;
 /**
  * 蛇形算法
  *
+ * 输入n，构建n*n数组，按蛇形顺序填充数组（1，2，3，...n）
+ * 按排输出数组
  * Created by admin on 16/9/3.
  */
 public class Snake {
 
-    public void snake(int n) {
+    public static void main(String[] args) {
+        Snake.snake(5);
+    }
+
+    public static void snake(int n) {
         int[][] array = new int[n][n];
 
         Node next = new Node();
@@ -30,7 +36,7 @@ public class Snake {
         }
     }
 
-    private Node nextNode(int[][] array, int n, Node node) {
+    private static Node nextNode(int[][] array, int n, Node node) {
         int endX = n / 2;
         int endY;
         if(n % 2 == 0) {
@@ -105,7 +111,7 @@ public class Snake {
         return null;
     }
 
-    private int nextValue(int current, int n) {
+    private static int nextValue(int current, int n) {
         if(current == n) {
           return 1;
         } else {
@@ -113,7 +119,7 @@ public class Snake {
         }
     }
 
-    private boolean needSwitch(int[][] array, int n, Node node) {
+    private static boolean needSwitch(int[][] array, int n, Node node) {
         if(node.getX() < 0 || node.getY() < 0 || node.getX() >= n || node.getY() >= n) {
             // 超出边界
             return true;
@@ -125,7 +131,7 @@ public class Snake {
         }
     }
 
-    private class Node {
+    private static class Node {
         int type;// 当前行驶类型，0为横向正方向；1为横向反方向；2为竖向正方向，3为竖向反方向
         int x;
         int y;
