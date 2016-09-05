@@ -75,6 +75,16 @@ public class Stack<E extends Object> {
         return this.datas[top--];
     }
 
+    /**
+     * 出栈(不删除顶点)
+     * */
+    public E peek() throws Exception {
+        if(isEmpty()) {
+            throw new Exception("栈已空！");
+        }
+        return this.datas[top];
+    }
+
     public static void main(String[] args) throws Exception{
         Stack<String> stack = new Stack<String>(1000);
         stack.push("1");

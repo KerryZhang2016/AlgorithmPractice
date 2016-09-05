@@ -78,4 +78,16 @@ public class Stack2<E extends Object> {
         return node.data;
     }
 
+    /**
+     * 出栈(不删除顶点)
+     * */
+    public E peek() throws Exception {
+        if(top == null) {
+            throw new Exception("栈为空");
+        }
+
+        Node node = top;
+        return node.data;
+    }
+
 }
