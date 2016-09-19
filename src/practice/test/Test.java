@@ -1,53 +1,69 @@
 package practice.test;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
- * Created by admin on 16/9/5.
+ * Created by admin on 16/9/10.
  */
 public class Test {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        Scanner cin = new Scanner(System.in);
-
-        int number = Integer.parseInt(cin.nextLine());
-        int[] array = new int[number];
-        for (int m = 0; m < number; m++) {
-            array[m] = Integer.parseInt(cin.nextLine());
+        while (scanner.hasNextLine()) {
+            getOrientation(scanner.nextLine(), scanner.nextLine(), scanner.nextLine());
         }
-        for(int m = 0; m < number; m ++){
-            int k = array[m];
+    }
 
-            int digit = 1;
-            while (k >= Math.pow(2, digit)) {
-                k  = (int) (k - Math.pow(2, digit));
-                if(k != 0) {
-                    digit ++;
-                }
+    private static void getOrientation(String str1, String str2, String str3) {
+        List<Integer> array1 = getLocation(str1, str2);
+        List<Integer> array2 = getLocation(str1, str3);
+
+        // 比较
+        if(array1.size() == 0 || array2.size() == 0) {
+            System.out.println("invalid");
+            return;
+        }
+
+        int max1 = 0;
+        int min1 = 0;
+        int max2 = 0;
+        int min2 = 0;
+        for(Integer i : array1) {
+            if(i > max1) {
+                max1 = i;
             }
-
-            // 余下k个数，目前位数为digit
-            if(k == 0) {
-                String result = "";
-                for (int i = 0; i < digit; i ++) {
-                    result = result + "7";
-                }
-                System.out.print(result + "");
-            } else {
-                String str = Integer.toBinaryString(k - 1);// 获取二进制字符串
-                if(str.length() < digit) {
-                    String head = "";
-                    for (int i = 0; i < digit - str.length(); i++){
-                        head = head + "0";
-                    }
-                    str = head + str;// 获取最终的字符串
-                }
-                // 替换字符
-                str = str.replace("0", "4");
-                str = str.replace("1", "7");
-                System.out.print(str);
+            if(min1 == 0 || i < min1) {
+                min1 = i;
             }
         }
+        for(Integer i : array2) {
+            if(i > max2) {
+                max2 = i;
+            }
+            if(min2 == 0 || i < min2) {
+                min2 = i;
+            }
+        }
+
+        if(max1 < min2) {
+            System.out.println("forward");
+        } else if(max2 < min1) {
+            System.out.println("backward");
+        } else {
+            System.out.println("both");
+        }
+
+    }
+
+    private static List<Integer> getLocation(String str1, String str2) {
+        List<Integer> array = new ArrayList<Integer>();
+
+        for(int i = 0; i + str2.length() <= str1.length(); i ++) {
+            if(str1.substring(i, i+str2.length()).equals(str2)) {
+                array.add(i);
+            }
+        }
+        return array;
     }
 }

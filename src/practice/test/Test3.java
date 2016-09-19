@@ -1,82 +1,59 @@
 package practice.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-/**
- * Created by admin on 16/9/6.
- */
 public class Test3 {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        int[] a = {2, 4, 2};
-        int[] b = {1, 3, 3, 5, 1};
-        int[] c = {3, 7, 5, 9, 10};
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();// 获取第一行
+            String[] array = line.split(" ");// 获取每个单词
 
-        sort(a);// 排序
-
-        List<Entity> list = new ArrayList<Entity>();
-        for (int i = 0; i < b.length; i++) {
-            list.add(new Entity(b[i], c[i]));
+            System.out.println(judgeTowWords(array[0], array[1]));
         }
-        list.sort(new EntityComparator());
+    }
 
+    /**
+     * 判断
+     * */
+    private static String judgeTowWords(String word1, String word2) {
+        if(word1.length() != word2.length()) {
+            return "no";
+        }
 
-        int price = 0;
-        for (int i = list.size()-1; i >= 0; i--) {
-            if(canUse(a, list.get(i).b)) {
-                price = price + list.get(i).c;// 累计金钱
+        char index = word1.charAt(0);
+        List<Integer> positions = new ArrayList<Integer>();
+
+        // 获取起始点
+        for (int i = 0; i < word2.length(); i++) {
+            if(word2.charAt(i) == index) {
+                positions.add(i);
             }
         }
 
-        System.out.print(price);
-    }
+        // 开始从第二个字符遍历
+        for (int i = 1; i < word1.length(); i++) {
+            char c = word1.charAt(i);
 
-    private static boolean canUse(int[] a, int b) {
-        for (int i = 0; i < a.length; i++) {
-            if(a[i] >= b) {
-                a[i] = 0;
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    private static class Entity {
-        private Entity(int b, int c) {
-            this.b = b;
-            this.c = c;
-        }
-
-        int b;
-        int c;
-    }
-
-    public static class EntityComparator implements Comparator<Entity> {
-
-        @Override
-        public int compare(Entity entity1, Entity entity2) {
-            if(entity1.c > entity2.c) return 1;
-            return -1;
-        }
-
-    }
-
-    public static void sort(int[] args){
-        int len = args.length;
-        for (int i = 0,k = 0; i < len; i++,k = i) {
-            // 在这一层循环中找最小
-            for (int j = i + 1; j < len; j++) {
-                // 如果后面的元素比前面的小，那么就交换下标，每一趟都会选择出来一个最小值的下标
-                if (args[k] > args[j]) k = j;
+            String result = "no";
+            for (int position : positions) {
+                if(position + i > word1.length() - 1) {
+                    position = position - word1.length();
+                }
+                if(c == word2.charAt(position + i)) {
+                    result = "yes";
+                }
             }
 
-            if (i != k) {
-                int tmp = args[i];
-                args[i] = args[k];
-                args[k] = tmp;
+            if(result.equals("no")) {
+                return "no";
             }
         }
+
+        return "yes";
     }
 }

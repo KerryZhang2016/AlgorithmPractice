@@ -1,61 +1,73 @@
 package practice.test;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * Created by admin on 16/9/5.
+ * Created by admin on 16/9/10.
  */
 public class Test2 {
 
     public static void main(String[] args) {
-        Scanner cin = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        int number = Integer.parseInt(cin.nextLine());
-        int[] array = new int[number];
-        for (int m = 0; m < number; m++) {
-            array[m] = Integer.parseInt(cin.nextLine());
+        int T = scanner.nextInt();
+        int MaxMem = scanner.nextInt();
+
+        int[] memory = new int[MaxMem];// 内存
+        HashMap<Integer, Space> spaces = new HashMap<Integer, Space>();// 已分配内存块
+
+        for (int i = 0; i < T; i++) {
+            String operation = scanner.nextLine();
+            doOperation(memory, spaces, operation);
         }
-        for (int i = 0; i < number; i++) {
-            System.out.println(getLuckyNumber(array[i]));
+    }
+
+    private static void doOperation(int[] memory, HashMap<Integer, Space> spaces, String operation) {
+        if(operation.startsWith("new")) {
+            // 创建内存
+            int num = Integer.parseInt(operation.substring(4, operation.length()));
+
+            // 判断位置
+
+            // 创建成功
+            int size = spaces.size();
+            spaces.put(size + 1, new Space(num, num));
+
+        } else if (operation.startsWith("del")) {
+            // 清空内存
+        } else if (operation.startsWith("def")) {
+            // 清理内存
         }
     }
 
     /**
-     * 获取小于n的幸运数个数
+     * 一段内存
      * */
-    private static int getLuckyNumber(int n) {
-        int number = 0;
-        for (int i = 1; i <= n; i++) {
-            if(isLucky(i)) {
-                number ++;
-            }
+    private static class Space {
+        int size;
+
+        int position;// 位置
+
+        private Space(int size, int position) {
+            this.size = size;
+            this.position = position;
         }
-        return number;
-    }
 
-    /**
-     * 是否是幸运数
-     * */
-    private static boolean isLucky(int x) {
-        return f(x) == g(x);
-    }
-
-    private static int f(int x) {
-        int result = 0;
-        String str = x + "";
-        for (int i = 0; i < str.length(); i++) {
-            result = result +  Integer.parseInt(str.substring(i, i + 1));
+        public int getSize() {
+            return size;
         }
-        return result;
-    }
 
-    private static int g(int x) {
-        int result = 0;
-        String str = Integer.toBinaryString(x);// 获取二进制字符串
-
-        for (int i = 0; i < str.length(); i++) {
-            result = result +  Integer.parseInt(str.substring(i, i + 1));
+        public void setSize(int size) {
+            this.size = size;
         }
-        return result;
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
     }
 }
