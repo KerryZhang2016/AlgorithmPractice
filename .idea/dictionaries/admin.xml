@@ -2,6 +2,8 @@
   <dictionary name="admin">
     <words>
       <w>datas</w>
+      <w>frac</w>
+      <w>yyyy</w>
     </words>
   </dictionary>
 </component>

@@ -171,4 +171,16 @@ public class BinaryTree {
         }
     }
 
+    //---------------------------------已知前序中序求后序-----------------------------------------------------------------
+
+    public static String posOrder(String pre, String mid) {
+        if(pre.length() != mid.length()) return null;
+
+        if(pre.length() == 1) return pre;
+        else if(pre.length() == 0) return "";
+
+        int m = mid.indexOf(pre.charAt(0));
+        return posOrder(pre.substring(1, m + 1), mid.substring(0, m)) + posOrder(pre.substring(m + 1), mid.substring(m + 1)) + pre.charAt(0);
+    }
+
 }

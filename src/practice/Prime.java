@@ -3,6 +3,7 @@ package practice;
 /**
  * 质数计算
  *
+ * 获取n以下的所有质数，采用的是穷举的方法，判断每一个数字是否是质数
  * Created by Kerry on 16/9/19.
  */
 public class Prime {
